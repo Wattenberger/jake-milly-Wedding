@@ -1,46 +1,131 @@
 @import 'colors.less';
+.ff1 {
+  font-family: "Lato", sans-serif;
+  // font-family: "Muli", sans-serif;
+}
+.ff2 {
+  font-family: "Playfair Display", serif;
+  font-weight: 300;
+}
 
 body {
-  padding: 20px;
-  font-family: 'Muli', sans-serif;
+  .ff1;
   background: @bgc;
   color: @tc;
+  font-size: 22px;
+  line-height: 1.5em;
 }
 
 h1 {
-  font-family: 'Playfair Display', cursive;
+  .ff2;
+  font-size: 6.2em;
   margin-top: 0;
-  color: @white;
+  color: @dark-green;
+}
+
+h3 {
+  .ff2;
+  font-size: 1.4em;
+  color: @dark-green;
+}
+
+h6 {
+    font-size: 1.1em;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+
+a {
+  position: relative;
+  padding: 0.4em 0.6em 0.2em;
+  margin: 0 1px;
+  color: @dark-green;
+  text-decoration: none;
+  z-index: 2;
+  border: 1px solid;
+  border-radius: 2px;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  &:hover {
+    color: @white;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: @dark-green;
+      z-index: -1;
+    }
+  }
 }
 
 .title {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
-  margin: -35px 0 0 -35px;
-  width: 100vw;
-  height: 90vh;
+  justify-content: flex-end;
+  // width: 100vw;
+  height: 500px;
+  background: #fff;
+  // background: @dark-green;
+  // color: @bgc;
   // color: @dark-green;
 
   h1 {
-    margin: 0 0 0 100px;
-    font-size: 10em;
+    margin: 0 0 0 80px;
+    line-height: 1em;
   }
 
   h6 {
-    font-size: 4em;
-    margin: 0 0 0 100px;
+    margin: 0 0 40px 80px;
     // color: @dark-grey;
   }
 
-  &:before {
-    content: "";
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    bottom: 20px;
-    left: 20px;
-    border: 4px solid;
+  img {
+    // position: absolute;
+    // top: 0;
+    // margin-left: 20px;
+    margin-bottom: -92px;
+    width: 300px;
+    // opacity: 0.2;
+  }
+
+  .countdown {
+    margin-top: -34px;
+    font-size: 0.9em;
+    opacity: 0.4;
+  }
+}
+
+.content {
+  padding: 20px 70px;
+}
+
+@media (max-width: 1000px) {
+  body {
+    font-size: 16px;
+  }
+
+  h6 {
+    font-size: 1em;
+  }
+
+  .title {
+    h1, h6, img {
+      margin-left: 30px;
+    }
+
+    h1 {
+      font-size: 4em;
+    }
+
+    img {
+      margin-bottom: -40px;
+    }
   }
 }
