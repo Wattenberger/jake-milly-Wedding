@@ -20,8 +20,11 @@ module.exports = {
     chunkFilename: "[chunkhash].js"
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
-    modulesDirectories: ['node_modules', srcPath]
+    extensions: ['', '.js'],
+    modulesDirectories: ['node_modules', srcPath],
+    alias: {
+      'vue$': 'vue/dist/vue.common.js',
+    }
   },
   module: {
     loaders: [
