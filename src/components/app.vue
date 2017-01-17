@@ -7,8 +7,11 @@
       <countdown />
     </div>
     <div class="content">
+      <p>
+        More information coming soon.
+      </p>
       <!-- <data-viz-or-story /> -->
-      <questions />
+      <!-- <questions /> -->
       <!-- <places-to-stay /> -->
       <!-- <wedding-party /> -->
       <!-- <event-schedule /> -->
