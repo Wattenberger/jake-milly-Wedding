@@ -13,13 +13,13 @@ body {
   .ff1;
   background: @bgc;
   color: @tc;
-  font-size: 22px;
+  font-size: 14px;
   line-height: 1.5em;
 }
 
 h1 {
   .ff2;
-  font-size: 6.2em;
+  font-size: 6em;
   margin-top: 0;
   color: @dark-green;
 }
@@ -31,7 +31,7 @@ h3 {
 }
 
 h6 {
-    font-size: 1.1em;
+    font-size: 1em;
     text-transform: uppercase;
     letter-spacing: 0.2em;
 }
@@ -65,46 +65,30 @@ a {
   }
 }
 
-.title {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-end;
-  // width: 100vw;
-  height: 500px;
-  background: #fff;
-  // background: @dark-green;
-  // color: @bgc;
-  // color: @dark-green;
+button {
+  display: inline-block;
+  padding: 0.5em 0.6em;
+  border: 1px solid @dark-green;
+  background: none;
+  color: @dark-green;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  line-height: 1em;
+  outline: none;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.3s ease-out;
+  -webkit-appearance: none;
 
-  h1 {
-    margin: 0 0 0 80px;
-    line-height: 1em;
+  &:hover {
+    background: @dark-green;
+    color: @bgc;
   }
-
-  h6 {
-    margin: 0 0 40px 80px;
-    // color: @dark-grey;
+  
+  & + button {
+    margin-left: 0.3em;
   }
-
-  img {
-    // position: absolute;
-    // top: 0;
-    // margin-left: 20px;
-    margin-bottom: -92px;
-    width: 300px;
-    // opacity: 0.2;
-  }
-
-  .countdown {
-    margin-top: -34px;
-    font-size: 0.9em;
-    opacity: 0.4;
-  }
-}
-
-.content {
-  padding: 20px 70px;
 }
 
 @media (max-width: 1000px) {
@@ -114,23 +98,5 @@ a {
 
   h6 {
     font-size: 1em;
-  }
-
-  .title {
-    h1, h6, img {
-      margin-left: 30px;
-    }
-
-    h1 {
-      font-size: 4em;
-    }
-
-    img {
-      margin-bottom: -40px;
-    }
-  }
-
-  .content {
-    padding: 20px 30px;
   }
 }
