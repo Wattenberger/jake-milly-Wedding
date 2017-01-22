@@ -56,12 +56,12 @@
   let animationRequestId
   const RECORD_FILE = "records"
   const INTERVAL_LENGTH = 30
-  const SNAKE_STARTING_LENGTH = 16
+  const SNAKE_STARTING_LENGTH = 6
   const CANVAS_RGB = "240, 240, 244"
   const SNAKE_RGB = "153, 199, 137"
   const TARGET_RGB = "211, 125, 78"
   const RAINBOW_COLORS = ["184,53,100", "255,106,90", "255,179,80", "131,184,170", "39,45,77"]
-  const MAX_NAME_LENGTH = 6
+  const MAX_NAME_LENGTH = 12
 
   let component = {
     mounted: function() {
