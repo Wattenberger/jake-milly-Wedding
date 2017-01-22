@@ -43,8 +43,7 @@
   import fetch from "./utils/fetch"
   const API_ROOT = "https://api.airtable.com/v0/appSzDbt6xNdQcRfd"
   const airtableDateTimeFormat = "YYYY-MM-DD HH:mm:SS"
-  let AIRTABLE_API_KEY = process.env && process.env.AIRTABLE_API_KEY
-  console.log(AIRTABLE_API_KEY, process.env)
+  import {AIRTABLE_API_KEY} from "config/config"
 
   const params = {
     api_key: AIRTABLE_API_KEY,
