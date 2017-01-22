@@ -45,7 +45,7 @@
   const airtableDateTimeFormat = "YYYY-MM-DD HH:mm:SS"
   let config = process.env && process.env.AIRTABLE_API_KEY ? process.env : require(".config")
   let AIRTABLE_API_KEY = config.AIRTABLE_API_KEY
-  console.log(AIRTABLE_API_KEY, config)
+  console.log(AIRTABLE_API_KEY, config, process.env)
 
   const params = {
     api_key: AIRTABLE_API_KEY,
