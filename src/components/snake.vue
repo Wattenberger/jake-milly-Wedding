@@ -19,25 +19,29 @@
   import {canvasUtils} from "./utils/canvasUtils"
   import {KEYS} from "./utils/keys"
   import "./snake.less"
+  import jakeImg from "images/jake.png"
+  import millyImg from "images/milly.png"
 
   let animationRequestId
-  const INTERVAL_LENGTH = 40
+  const INTERVAL_LENGTH = 30
   const SNAKE_STARTING_LENGTH = 6
   const CANVAS_RGB = "240, 240, 244"
   const SNAKE_RGB = "153, 199, 137"
   const TARGET_RGB = "211, 125, 78"
+  const RAINBOW_COLORS = ["184,53,100", "255,106,90", "255,179,80", "131,184,170", "39,45,77"]
 
   let component = {
     mounted: function() {
-      let {height, width} = this
+      let {HEIGHT_PXS, TILE_PX, height, width} = this
       window.addEventListener("keydown", this.onKeydown)
       window.addEventListener("resize", this.onResize)
 
       let canvas = this.$refs.canvas.getContext("2d")
       _.extend(this, {canvas})
 
+      this.drawBottomBorder()
       canvasUtils.fadeCanvas(1, canvas, CANVAS_RGB, {
-        height, width
+        width, height: HEIGHT_PXS * TILE_PX + 0.5
       })
       this.draw()
     },
@@ -60,6 +64,7 @@
         playing: true,
         score: null,
         record: null,
+        dirBuffer: null,
       }
     },
     computed: {
@@ -85,7 +90,17 @@
           height: window.innerHeight,
           width: window.innerWidth,
         }
+
         _.extend(this, newVars)
+        window.setTimeout(this.drawBottomBorder, 100)
+      },
+
+      drawBottomBorder: function() {
+        let {HEIGHT_PXS, TILE_PX, canvas, height, width} = this
+
+        let yStart = HEIGHT_PXS * TILE_PX + 0.5
+        canvas.fillStyle = "#0e4e47"
+        canvas.fillRect(0, yStart, width, height - yStart)
       },
 
       startNewGame: function() {
@@ -116,17 +131,21 @@
       },
 
       changeDir: function(dir, e) {
-        e.preventDefault()
+        if (e) e.preventDefault()
 
         let {hasDrawnAfterDirChange, playing, snake} = this
-        if (!playing || !hasDrawnAfterDirChange) return
+        if (!playing || !snake) return
 
         const checkAxis = (axis) => Math.abs(dir[axis] - snake.dir[axis]) > 1
         if (checkAxis("x") || checkAxis("y")) return
 
-        snake.dir = dir
-        hasDrawnAfterDirChange = false
-        _.extend(this, {snake, hasDrawnAfterDirChange})
+        if (!hasDrawnAfterDirChange) {
+          this.dirBuffer = dir
+        } else {
+          snake.dir = dir
+          hasDrawnAfterDirChange = false
+          _.extend(this, {snake, hasDrawnAfterDirChange})
+        }
       },
 
       onKeydown: function(e) {
@@ -136,16 +155,19 @@
       },
 
       draw: function() {
-        let {width, height, canvas, playing} = this
+        let {HEIGHT_PXS, TILE_PX, width, height, canvas, playing, dirBuffer} = this
         if (!playing) return
 
+        _.extend(this, {hasDrawnAfterDirChange: true})
+        if (dirBuffer) {
+          this.changeDir(dirBuffer)
+        }
         if (canvas) {
           canvasUtils.fadeCanvas(1, canvas, CANVAS_RGB, {
-            width, height
+            width, height: HEIGHT_PXS * TILE_PX + 0.5
           })
           this.drawTarget()
           this.drawSnake()
-          _.extend(this, {hasDrawnAfterDirChange: true})
         }
 
         animationRequestId = setTimeout(() => {window.requestAnimationFrame(this.draw)}, INTERVAL_LENGTH)
@@ -192,8 +214,12 @@
 
         history.unshift(newPos)
         history = history.splice(0, snake.length)
-        _.map(history, historyPoint => {
-          this.drawPx(historyPoint, SNAKE_RGB)
+        _.map(history, (historyPoint, idx) => {
+          if (!idx) {
+            this.drawFace(historyPoint, jakeImg)
+          } else {
+            this.drawRainbowPx(historyPoint, snake.dir, history[idx - 1])
+          }
         })
 
         _.extend(this, {snake, history, target, points})
@@ -209,6 +235,45 @@
           this.TILE_PX + 1,
           this.TILE_PX + 1,
         )
+      },
+
+      drawFace: function(pos, imgUrl) {
+        let {TILE_PX, canvas} = this
+
+        let img = new Image()
+        img.src = imgUrl
+        canvas.drawImage(img, pos.x * TILE_PX, pos.y * TILE_PX)
+      },
+
+      drawRainbowPx: function(pos, currentDir, lastPos) {
+        let {canvas, snake} = this
+        let dir = lastPos ?
+                    lastPos.x != pos.x ?
+                      "x" : "y" :
+                    currentDir.x != 0 ?
+                      "x" : "y"
+
+        let colorHeight = (this.TILE_PX + 1) / RAINBOW_COLORS.length
+        let x = pos.x * this.TILE_PX
+        let y = pos.y * this.TILE_PX
+        _.each(RAINBOW_COLORS, (color, idx) => {
+          canvas.fillStyle = `rgb(${color})`
+          if (dir == "x") {
+            canvas.fillRect(
+              x - 0.5,
+              y + colorHeight * idx,
+              this.TILE_PX + 1,
+              colorHeight,
+            )
+          } else {
+            canvas.fillRect(
+              x + colorHeight * idx,
+              y - 0.5,
+              colorHeight,
+              this.TILE_PX + 1,
+            )
+          }
+        })
       },
 
       drawCircle: function(pos, rgb, style="fill") {
@@ -235,7 +300,8 @@
         if (!target) target = this.createTarget()
 
         // this.drawPx(target, TARGET_RGB, "stroke")
-        this.drawCircle(target, TARGET_RGB, "stroke")
+        // this.drawCircle(target, TARGET_RGB, "stroke")
+        this.drawFace(target, millyImg)
         _.extend(this, {target})
       },
 
@@ -248,6 +314,7 @@
     },
     destroyed: function() {
       window.removeEventListener("keydown", this.onKeydown)
+      window.removeEventListener("resize", this.onResize)
       window.cancelAnimationFrame(animationRequestId)
     }
   }

@@ -14,6 +14,10 @@ const serverOptions = {
   hot: true,
   inline: true,
   publicPath: config.output.publicPath,
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: 300,
+  },
   proxy: {
     '*': `http://${WEBPACK_HOST}:${SERVER_PORT}`
   }
