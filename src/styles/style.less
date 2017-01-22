@@ -65,6 +65,20 @@ a {
   }
 }
 
+input {
+  display: block;
+  width: 100%;
+  padding: 0.5em 0.6em;
+  font-size: 16px;
+  line-height: 1em;
+  color: @dark-grey;
+  border: 1px solid @light-grey;
+  &:focus, &:active {
+    border-color: @dark-green;
+    outline: @dark-green;
+  }
+}
+
 button {
   display: inline-block;
   padding: 0.5em 0.6em;

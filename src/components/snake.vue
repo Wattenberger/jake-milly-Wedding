@@ -3,32 +3,67 @@
     <div class="snake__overlay"
          v-if="!playing"
          :style="{height: `${height}px`, width: `${width}px`}">
+
       <div v-if="record">
+        <div class="snake__name">
+          <h6>Your Name:</h6>
+          <input ref="name" type="text" v-model="name" autoselect>
+        </div>
+
         <h6>Last game: {{ score }}</h6>
         <h6>Record: {{ record }}</h6>
       </div>
       <h6 v-if="!record">Play snake</h6>
+
       <button v-on:click="startNewGame">New Game (Enter)</button>
     </div>
+
+    <div class="snake__record-board" :class="{fade: playing && hasPlayed}">
+      <h6>Record Board</h6>
+      <div class="snake__record-board__record"
+           v-for="record in records">
+        <div class="snake__record-board__record__name">{{ record.name }}</div>
+        <div class="snake__record-board__record__score">{{ record.score }}</div>
+       </div>
+    </div>
+
     <canvas ref="canvas" :height="height" :width="width" />
   </div>
 </template>
 
 <script>
   import _ from "lodash"
+  import moment from "moment"
   import {canvasUtils} from "./utils/canvasUtils"
   import {KEYS} from "./utils/keys"
   import "./snake.less"
   import jakeImg from "images/jake.png"
   import millyImg from "images/milly.png"
 
+  import fetch from "./utils/fetch"
+  const API_ROOT = "https://api.airtable.com/v0/appSzDbt6xNdQcRfd"
+  const airtableDateTimeFormat = "YYYY-MM-DD HH:mm:SS"
+  let config = process.env && process.env.AIRTABLE_API_KEY ? process.env : require(".config")
+  let AIRTABLE_API_KEY = config.AIRTABLE_API_KEY
+  console.log(AIRTABLE_API_KEY, config)
+
+  const params = {
+    api_key: AIRTABLE_API_KEY,
+    pageSize: 20,
+    sortField: "Score",
+    sortDirection: "desc",
+  }
+  const expandParams = params => Object.keys(params).map(key => key + "=" + encodeURIComponent(params[key])).join("&")
+
   let animationRequestId
+  const RECORD_FILE = "records"
   const INTERVAL_LENGTH = 30
-  const SNAKE_STARTING_LENGTH = 6
+  const SNAKE_STARTING_LENGTH = 16
   const CANVAS_RGB = "240, 240, 244"
   const SNAKE_RGB = "153, 199, 137"
   const TARGET_RGB = "211, 125, 78"
   const RAINBOW_COLORS = ["184,53,100", "255,106,90", "255,179,80", "131,184,170", "39,45,77"]
+  const MAX_NAME_LENGTH = 6
 
   let component = {
     mounted: function() {
@@ -44,6 +79,7 @@
         width, height: HEIGHT_PXS * TILE_PX + 0.5
       })
       this.draw()
+      this.fetchRecords()
     },
     data() {
       return {
@@ -64,7 +100,11 @@
         playing: true,
         score: null,
         record: null,
+        records: null,
         dirBuffer: null,
+        hasPlayed: false,
+        name: "Name",
+        recordId: null,
       }
     },
     computed: {
@@ -128,13 +168,21 @@
           record,
           playing: false
         })
+        this.recordId = null
+        this.saveRecord()
+
+        let ctrl = this
+        window.setTimeout(() => {
+          ctrl.$refs.name && ctrl.$refs.name.focus()
+        }, 100)
       },
 
       changeDir: function(dir, e) {
         if (e) e.preventDefault()
 
-        let {hasDrawnAfterDirChange, playing, snake} = this
+        let {hasDrawnAfterDirChange, playing, snake, hasPlayed} = this
         if (!playing || !snake) return
+        hasPlayed = true
 
         const checkAxis = (axis) => Math.abs(dir[axis] - snake.dir[axis]) > 1
         if (checkAxis("x") || checkAxis("y")) return
@@ -144,7 +192,7 @@
         } else {
           snake.dir = dir
           hasDrawnAfterDirChange = false
-          _.extend(this, {snake, hasDrawnAfterDirChange})
+          _.extend(this, {snake, hasDrawnAfterDirChange, hasPlayed})
         }
       },
 
@@ -310,6 +358,46 @@
           width: `${BOARD_WIDTH}px`,
           height: `${BOARD_WIDTH}px`,
         }
+      },
+
+      fetchRecords: function() {
+        let ctrl = this
+
+        fetch(`${API_ROOT}/Scores?${expandParams(params)}`, {
+          method: "GET",
+        }).then(res => {
+          ctrl.records = res.records.map(record => ({
+            date: moment(record.fields.Date, airtableDateTimeFormat),
+            score: record.fields.Score,
+            name: record.fields.Name,
+          }))
+        })
+      },
+
+      saveRecord: function() {
+        let {name, score, recordId} = this
+        let ctrl = this
+
+        let fields = {
+          Date: moment().format(airtableDateTimeFormat),
+          Name: name,
+          Score: score,
+        }
+        let url = recordId ? `${API_ROOT}/Scores/${recordId}?${expandParams(params)}` :
+                             `${API_ROOT}/Scores?${expandParams(params)}`
+        fetch(url, {
+          method: recordId ? "PATCH" : "POST",
+          body: JSON.stringify({fields}),
+        }).then(res => {
+          ctrl.fetchRecords()
+          this.recordId = res.id
+        })
+      },
+    },
+    watch: {
+      name: function(newVal) {
+        this.name = newVal.slice(0, MAX_NAME_LENGTH)
+        this.saveRecord()
       },
     },
     destroyed: function() {
