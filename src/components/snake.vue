@@ -39,6 +39,7 @@
   import "./snake.less"
   import jakeImg from "images/jake2.png"
   import millyImg from "images/milly2.png"
+  import heartImg from "images/hearts.png"
 
   import fetch from "./utils/fetch"
   const API_ROOT = "https://api.airtable.com/v0/appSzDbt6xNdQcRfd"
@@ -241,7 +242,7 @@
       },
 
       drawSnake: function () {
-        let {width, height, canvas, snake, history, target, points} = this
+        let {TILE_PX, width, height, canvas, snake, history, target, points, justAte} = this
         if (!snake) snake = this.createSnake()
 
         let newPos = this.interpPos(snake.pos, snake.dir)
@@ -251,6 +252,7 @@
         if (newPos.x == target.x && newPos.y == target.y) {
           target = this.createTarget()
           snake.length++
+          justAte = 20
         }
 
         // Die?
@@ -263,9 +265,15 @@
         _.map(history, (historyPoint, idx) => {
           if (idx) this.drawRainbowPx(historyPoint, snake.dir, history[idx - 1])
         })
-        this.drawFace(newPos, jakeImg)
+        if (justAte) {
+          let scale = (10 - Math.abs(10 - justAte)) * 10
+          let offset = TILE_PX / 2 - scale / 2
+          this.drawImg(newPos, heartImg, {x: offset, y: offset}, {height: scale, width: scale})
+          justAte--
+        }
+        this.drawImg(newPos, jakeImg)
 
-        _.extend(this, {snake, history, target, points})
+        _.extend(this, {snake, history, target, points, justAte})
       },
 
       drawPx: function(pos, rgb, style="fill") {
@@ -280,12 +288,14 @@
         )
       },
 
-      drawFace: function(pos, imgUrl) {
+      drawImg: function(pos, imgUrl, offset={x:0, y:0}, config) {
         let {TILE_PX, canvas} = this
 
         let img = new Image()
         img.src = imgUrl
-        canvas.drawImage(img, pos.x * TILE_PX, pos.y * TILE_PX)
+        let args = [img, pos.x * TILE_PX + offset.x, pos.y * TILE_PX + offset.y]
+        if (config) args = [...args, config.height, config.width]
+        canvas.drawImage(...args)
       },
 
       drawRainbowPx: function(pos, currentDir, lastPos) {
@@ -345,7 +355,7 @@
 
         // this.drawPx(target, TARGET_RGB, "stroke")
         // this.drawCircle(target, TARGET_RGB, "stroke")
-        this.drawFace(target, millyImg)
+        this.drawImg(target, millyImg)
         _.extend(this, {target})
       },
 
