@@ -37,8 +37,8 @@
   import {canvasUtils} from "./utils/canvasUtils"
   import {KEYS} from "./utils/keys"
   import "./snake.less"
-  import jakeImg from "images/jake.png"
-  import millyImg from "images/milly.png"
+  import jakeImg from "images/jake2.png"
+  import millyImg from "images/milly2.png"
 
   import fetch from "./utils/fetch"
   const API_ROOT = "https://api.airtable.com/v0/appSzDbt6xNdQcRfd"
@@ -261,12 +261,9 @@
         history.unshift(newPos)
         history = history.splice(0, snake.length)
         _.map(history, (historyPoint, idx) => {
-          if (!idx) {
-            this.drawFace(historyPoint, jakeImg)
-          } else {
-            this.drawRainbowPx(historyPoint, snake.dir, history[idx - 1])
-          }
+          if (idx) this.drawRainbowPx(historyPoint, snake.dir, history[idx - 1])
         })
+        this.drawFace(newPos, jakeImg)
 
         _.extend(this, {snake, history, target, points})
       },
@@ -299,6 +296,7 @@
                     currentDir.x != 0 ?
                       "x" : "y"
 
+        let imgOffset = 5
         let colorHeight = (this.TILE_PX + 1) / RAINBOW_COLORS.length
         let x = pos.x * this.TILE_PX
         let y = pos.y * this.TILE_PX
@@ -306,15 +304,15 @@
           canvas.fillStyle = `rgb(${color})`
           if (dir == "x") {
             canvas.fillRect(
-              x - 0.5,
-              y + colorHeight * idx,
+              x - 0.5 + imgOffset,
+              y + colorHeight * idx + imgOffset,
               this.TILE_PX + 1,
               colorHeight,
             )
           } else {
             canvas.fillRect(
-              x + colorHeight * idx,
-              y - 0.5,
+              x + colorHeight * idx + imgOffset,
+              y - 0.5 + imgOffset,
               colorHeight,
               this.TILE_PX + 1,
             )
