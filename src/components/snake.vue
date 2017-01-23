@@ -383,6 +383,7 @@
       saveRecord: function() {
         let {name, score, recordId} = this
         let ctrl = this
+        if (!score) return
 
         let fields = {
           Date: moment().format(airtableDateTimeFormat),
