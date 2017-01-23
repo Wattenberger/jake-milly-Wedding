@@ -9,6 +9,7 @@
       <h6>8.26.2017 - Stern Grove, San Francisco</h6>
       <countdown />
       <div class="title__more-info">More information coming soon</div>
+      <arrowkeys />
     </div>
     <!-- <div class="content"> -->
       <!-- <p>More information coming soon.</p> -->
@@ -27,6 +28,7 @@ import {KEYS} from "./utils/keys"
 import jakemilly from "./../images/jakemilly.png"
 import questions from "./questions.vue"
 import countdown from "./countdown.vue"
+import arrowkeys from "./arrowkeys.vue"
 import snake from "./snake.vue"
 import "./app.less"
 
@@ -55,6 +57,7 @@ export default {
   components: {
     questions,
     countdown,
+    arrowkeys,
     snake,
   },
   destroyed: function() {
