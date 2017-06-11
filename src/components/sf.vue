@@ -4,7 +4,6 @@
     <div class="row">
       <div class="col1">
         <h1>Your Trip</h1>
-        <!-- <h2>Where to stay</h2> -->
         
       </div>
       <div class="col2">

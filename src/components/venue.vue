@@ -14,9 +14,32 @@
             <div>San Francisco, CA 94132</div>
           </div>
         </div>
+
         <div class="section">
           <h3>Weather</h3>
           <p>It should be overcast and in the 60s or 70s <a href="https://darksky.net/details/37.7361,-122.4786/2016-8-26/us12/en" target="_blank">Last year</a>. We’ll be outside at least part of the time, so please bring an extra layer to keep cozy!</p>
+        </div>
+
+        <div class="section">
+          <h3>Schedule</h3>
+          <ul class="marker-list">
+            <li>
+              <div class="marker">3<span class="sub">PM</span></div>
+              <div><h6>Cocktails & hors d’oeuvres</h6></div>
+            </li>
+            <li>
+              <div class="marker">4<span class="sub">PM</span></div>
+              <div><h6>the Ceremony</h6></div>
+            </li>
+            <li>
+              <div class="marker">5<span class="sub">PM</span></div>
+              <div><h6>Photos & open bar</h6></div>
+            </li>
+            <li>
+              <div class="marker">6<span class="sub">PM</span></div>
+              <div><h6>Dinner & dancing</h6></div>
+            </li>
+          </ul>
         </div>
 
         <div class="section">
@@ -25,15 +48,15 @@
             <li>
               <div class="marker">🚗</div>
               <div>
-                <h6>If you're driving</h6>
-                <div>Here's a map!</div>
+                <h6>If you’re driving</h6>
+                <div>Here’s a map!</div>
               </div>
             </li>
             <li>
               <div class="marker">🚃</div>
               <div>
-                <h6>If you're taking public transportation</h6>
-                <div>Take the MUNI KT or M line outbound to West Portal/Sloat/St Francis Station. Note that the K and M lines run underground through downtown and at street level near the venue. From there it's an 8-10 minute walk to the venue. It's a rather steep walk down the drive to the venue, so keep that in mind when planning your trip.</div>
+                <h6>If you’re taking public transportation</h6>
+                <div>Take the MUNI KT or M line outbound to West Portal/Sloat/St Francis Station. Note that the K and M lines run underground through downtown and at street level near the venue. From there it’s an 8-10 minute walk to the venue. It’s a rather steep walk down the drive to the venue, so keep that in mind when planning your trip.</div>
               </div>
             </li>
           </ul>
@@ -45,11 +68,11 @@
           <ul class="marker-list">
             <li>
               <div class="marker">1</div>
-              <div>The best parking lot is past the main entrance to Stern Grove. Continue westbound on Sloat for about 0.5 mile to Vale Avenue and turn right. This road leads to Stern Grove's West Meadow parking lot (directions). Once you park your car, walk east past the West Meadow, past the Amphitheatre and you'll see the Trocadero Clubhouse to your left (there will also be signs). There are no hills but it is a 5 min. walk.</div>
+              <div>The best parking lot is past the main entrance to Stern Grove. Continue westbound on Sloat for about 0.5 mile to Vale Avenue and turn right. This road leads to Stern Grove’s West Meadow parking lot (directions). Once you park your car, walk east past the West Meadow, past the Amphitheatre and you’ll see the Trocadero Clubhouse to your left (there will also be signs). There are no hills but it is a 5 min. walk.</div>
             </li>
             <li>
               <div class="marker">2</div>
-              <div>There is a much smaller parking lot in front of the Trocadero Clubhouse that is available if guests need more access. Send us an <a href="mailto:hi@jakemilly.com">email</a> in advance if you'll need closer parking.</div>
+              <div>There is a much smaller parking lot in front of the Trocadero Clubhouse that is available if guests need more access. Send us an <a href="mailto:hi@jakemilly.com">email</a> in advance if you’ll need closer parking.</div>
             </li>
             <li>
               <div class="marker">3</div>
