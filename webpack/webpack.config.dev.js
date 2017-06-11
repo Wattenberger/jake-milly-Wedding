@@ -72,6 +72,12 @@ module.exports = {
       "__PROD__": JSON.stringify(process.env.NODE_ENV === "production")
     }),
 
+    new webpack.DefinePlugin({
+      'process.env': {
+        AIRTABLE_API_KEY: JSON.stringify(process.env.AIRTABLE_API_KEY),
+      },
+    }),
+
     new CleanWebpackPlugin(['dist'], {
         root: __dirname,
         verbose: true,

@@ -6,7 +6,6 @@ import App from "./components/app.vue"
 // import VueRouter from 'vue-router'
 // Vue.use(VueRouter)
 
-
 new Vue({
   el: '#app',
   components: {App}
