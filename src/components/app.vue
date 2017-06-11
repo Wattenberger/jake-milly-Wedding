@@ -1,5 +1,5 @@
 <template>
-  <div class="app" :class="{ playing }">
+  <div class="app">
     <!-- <div class="background" v-if="!isMobile">
       <snake />
     </div> -->

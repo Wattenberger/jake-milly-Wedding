@@ -6,18 +6,20 @@
         <h1>RSVP</h1>
       </div>
       <div class="col2">
-        <vue-form :state="formstate" @submit.prevent="onSubmit" v-if="!submitted">
+        <vue-form :state="formstate" @submit.prevent="onSubmit" v-if="!submitted" :class="{loading: loading}">
           <validate tag="label">
             <div class="field">
-              <label>Your Name</label>
+              <label>Your Name(s)</label>
               <div class="input-addon">
                 <input v-model="model.name"
                        required
+                       autocomplete="off" 
                        name="name"
                        v-on:keyup="wrongName = false"
+                       v-on:keydown.13="lookupName"
                        type="text">
                 <div class="addon">
-                <button v-on:click="lookupName" v-if="!id">Lookup</button>
+                <button v-on:click="lookupName">Lookup</button>
                 </div>
               </div>
             </div>
@@ -49,14 +51,18 @@
                 <div class="field" v-if="guests > 1" v-for="n in guests - 1">
                   <label>Guest<span v-if="guests > 2"> {{ n }}</span> Name</label>
                   <input type="text"
-                         v-model="model[`guest${n}`]">
+                         v-model="model[`guest${n}`]"
+                         v-on:keydown.13="saveRsvp"
+                         :name="`guest${n}`">
                 </div>
               </validate>
 
               <div class="field">
                 <label>What song should we dance to?</label>
                 <input type="text"
-                       v-model="model.song">
+                       v-model="model.song"
+                       v-on:keydown.13="saveRsvp"
+                       name="song">
               </div>
             </div>
 
@@ -68,6 +74,7 @@
           <h3>Thanks for RSVPing</h3>
           <p v-if="model.status">We're excited to see you in August!</p>
           <p v-if="!model.status">We're sad you can't make it, hopefully we can catch up soon!</p>
+          <button class="button" v-on:click="submitted = false">Change response</button>
         </div>
       </div>
     </div>
@@ -115,6 +122,7 @@ let component = {
       id: null,
       guests: 0,
       wrongName: false,
+      loading: false,
       submitted: false,
     }
   },
@@ -124,30 +132,28 @@ let component = {
       //   // alert user and exit early
       //   return;
       // }
-      console.log(this.formstate)
       this.wrongName = false
+      this.id = null
       this.validateName();
     },
-    onSubmit: function () {
-      if(this.formstate.$invalid) {
-        // alert user and exit early
-        return;
-      }
-      console.log(this.formstate)
+
+    onSubmit: function() {
+      // this[this.id ? "saveRsvp" : "validateName"]()
     },
 
     validateName: function() {
       let ctrl = this
 
+      this.loading = true
       const guestParams = _.extend(params, {
         fields: ["Guest", "People Invited"],
-        filterByFormula: `Guest = "${this.model.name}"`,
+        filterByFormula: `LOWER(Guest) = "${this.model.name.toLowerCase()}"`,
       })
 
       fetch(`${API_ROOT}?${expandParams(params)}`, {
         method: "GET",
       }).then(res => {
-        console.log(res)
+        this.loading = false
         if (!res.records ||
             !res.records.length) {
           ctrl.wrongName = true
@@ -164,6 +170,7 @@ let component = {
       let ctrl = this
       if (!this.id) return
 
+      this.loading = true
       let fields = {
         rsvp: this.model.status ? "yes" : "no",
         guest1: this.model.guest1,
@@ -178,6 +185,7 @@ let component = {
         method: "PATCH",
         body: JSON.stringify({fields}),
       }).then(res => {
+        this.loading = false
         ctrl.submitted = true
       })
     },

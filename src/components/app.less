@@ -1,6 +1,8 @@
 @import (reference) "../styles/style.less";
 
 .app {
+	margin-bottom: 10em;
+
 	&.playing {
 		.title {
 			opacity: 0.1;
@@ -128,6 +130,8 @@
 }
 
 form {
+	transition: opacity 0.2s ease-out;
+
 	h3 {
 		padding-top: 0.6em;
 		margin-bottom: 0;
@@ -164,11 +168,19 @@ form {
 		color: @burgundy;
 		&:extend(h6);
 	}
+
+	&.loading {
+		opacity: 0.3;
+		pointer-events: none;
+	}
 }
 
 @media (max-width: 1000px) {
   .app {
 	  .title {
+	  	padding: 0;
+	  	height: auto;
+
 	    h1, h6, .title__more-info, img {
 	      margin-left: 30px;
 	    }
