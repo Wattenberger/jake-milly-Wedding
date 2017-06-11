@@ -145,9 +145,10 @@ let component = {
       let ctrl = this
 
       this.loading = true
+      const name = this.model.name.toLowerCase().trim()
       const guestParams = _.extend(params, {
         fields: ["Guest", "People Invited"],
-        filterByFormula: `LOWER(Guest) = "${this.model.name.toLowerCase()}"`,
+        filterByFormula: `LOWER(Guest) = "${name}"`,
       })
 
       fetch(`${API_ROOT}?${expandParams(params)}`, {
