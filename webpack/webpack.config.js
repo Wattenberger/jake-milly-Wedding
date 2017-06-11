@@ -71,11 +71,11 @@ module.exports = {
       },
     }),
     
-    // new CleanWebpackPlugin(['dist'], {
-    //     root: __dirname,
-    //     verbose: true,
-    //     dry: false,
-    //     exclude: ['favicon.*']
-    // }),
+    new CleanWebpackPlugin(['dist'], {
+        root: __dirname,
+        verbose: true,
+        dry: false,
+        exclude: ['favicon.*']
+    }),
   ]
 }
