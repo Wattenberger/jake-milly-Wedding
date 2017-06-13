@@ -5,21 +5,21 @@
          :style="{height: `${height}px`, width: `${width}px`}">
 
       <div v-if="record">
-        <div class="snake__name">
-          <h6>Your Name:</h6>
+        <div class="snake__name field">
+          <h6 class="label">Your Name</h6>
           <input ref="name" type="text" v-model="name" autoselect>
         </div>
 
-        <h6>Last game: {{ score }}</h6>
-        <h6>Record: {{ record }}</h6>
+        <h6>Last game: <b>{{ score }}</b></h6>
+        <h6>Record: <b>{{ record }}</b></h6>
       </div>
       <h6 v-if="!record">Play snake</h6>
 
-      <button v-on:click="startNewGame">New Game (Enter)</button>
+      <button v-on:click="startNewGame">New Game [Enter]</button>
     </div>
 
     <div class="snake__record-board" :class="{fade: playing && hasPlayed}">
-      <h6>Record Board</h6>
+      <h3>Record Board</h3>
       <div class="snake__record-board__record"
            v-for="record in records">
         <div class="snake__record-board__record__name">{{ record.name }}</div>
@@ -58,7 +58,7 @@
   const RECORD_FILE = "records"
   const INTERVAL_LENGTH = 30
   const SNAKE_STARTING_LENGTH = 6
-  const CANVAS_RGB = "240, 240, 244"
+  const CANVAS_RGB = "8, 24, 19"
   const SNAKE_RGB = "153, 199, 137"
   const TARGET_RGB = "211, 125, 78"
   const RAINBOW_COLORS = ["184,53,100", "255,106,90", "255,179,80", "131,184,170", "39,45,77"]

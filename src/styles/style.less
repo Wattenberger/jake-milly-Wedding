@@ -1,4 +1,5 @@
 @import 'colors.less';
+@import 'utils.less';
 
 .ff1 {
   font-family: "Lato", sans-serif;
@@ -11,6 +12,7 @@
 
 body {
   .ff1;
+  margin: 0;
   background: @bgc;
   color: @tc;
   font-size: 16px;
@@ -19,7 +21,7 @@ body {
 
 h1 {
   .ff2;
-  font-size: 5.6em;
+  font-size: 4.2em;
   margin-top: 0;
   line-height: 1.1em;
   color: @dark-green;
@@ -46,6 +48,8 @@ h3 {
 
 h6 {
     font-size: 0.7em;
+    line-height: 1.4em;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.2em;
     margin-bottom: 0.2em;
@@ -61,7 +65,7 @@ a {
   position: relative;
   padding: 0.2em 0.6em 0.2em;
   margin: 0 1px;
-  color: @burgundy;
+  color: @orange;
   text-decoration: none;
   z-index: 2;
   border: 1px solid;
@@ -80,24 +84,50 @@ a {
       right: 0;
       bottom: 0;
       left: 0;
-      background: @burgundy;
+      background: @orange;
       z-index: -1;
     }
   }
 }
+.selection(@color; @bg) {
+  &::selection {
+    -webkit-font-smoothing: antialiased;
+    color: @color;
+    text-shadow: none;
+    background: @bg;
+    background: fadeout(@bg, 1%);
+  }
+  &::-webkit-selection {
+    -webkit-font-smoothing: antialiased;
+    color: @color;
+    text-shadow: none;
+    background: @bg;
+    background: fadeout(@bg, 1%);
+  }
+  &::-moz-selection {
+    -webkit-font-smoothing: antialiased;
+    color: @color;
+    text-shadow: none;
+    background: @bg;
+    background: fadeout(@bg, 1%);
+  }
+}
+
+.selection(@white; @dark-green);
 
 .marker-list {
   padding: 0;
 
   .marker {
     .ff2;
-    flex: 0 0 1em;
-    padding-right: 1.6em;
-    padding-left: 1.6em;
+    flex: 0 0 2em;
+    padding-right: 2.1em;
+    padding-left: 0.1em;
     padding-bottom: 0.3em;
-    color: @burgundy;
+    color: @orange;
     font-size: 1.3em;
     line-height: 1em;
+    text-align: right;
   }
 
   li {
@@ -129,9 +159,9 @@ input {
 button {
   display: inline-block;
   padding: 0.5em 0.6em;
-  border: 1px solid @dark-green;
+  border: 1px solid @orange;
   background: none;
-  color: @dark-green;
+  color: @orange;
   font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
@@ -143,12 +173,34 @@ button {
   -webkit-appearance: none;
 
   &:hover {
-    background: @dark-green;
+    background: @orange;
     color: @bgc;
   }
   
   & + button {
     margin-left: 0.3em;
+  }
+}
+
+.body-section {
+  padding: 3em 6em 6em;
+
+  &.body-section-white {
+    background: #fff;
+  }
+
+  &.body-section-dark {
+    background: @tc;
+    color: @bgc;
+
+    h1, h2, h3, h4, h5, h6 {
+      color: @white;
+    }
+
+    button {
+      // color: @white;
+      // border-color: @white;
+    }
   }
 }
 
@@ -167,6 +219,90 @@ button {
   flex: 1.3;
 }
 
+.toggle {
+  display: flex;
+
+  & > .button {
+    padding-left: 1em;
+    padding-right: 1em;
+    border-radius: 2px 0 0 2px;
+    border: 1px solid @orange;
+
+    & + .button {
+      margin-left: 0;
+      border-left-width: 0;
+      border-radius: 0 0 0 0;
+    }
+
+    &:last-child {
+      border-radius: 0 2px 2px 0;
+    }
+  }
+
+  & .button--selected {
+    background: @orange;
+    color: @white;
+    cursor: default;
+    // pointer-events: none;
+  }
+}
+
+
+.field {
+  margin-top: 1.3em;
+  margin-bottom: 0.2em;
+
+  label {
+    &:extend(h6);
+  }
+}
+
+form {
+  transition: opacity 0.2s ease-out;
+
+  h3 {
+    padding-top: 0.6em;
+    margin-bottom: 0;
+
+    & + .field {
+      margin-top: 0.4em;
+    }
+  }
+
+  .input-addon {
+    display: flex;
+    align-items: stretch;
+
+    input {
+      flex: 1;
+    }
+
+    .addon {
+      flex: 0 0;
+      padding-left: 0.6em;
+
+      button {
+        margin: 0;
+        height: 100%;
+      }
+    }
+  }
+
+  button {
+    margin-top: 1.2em;
+  }
+
+  .form-message-error {
+    color: @orange;
+    &:extend(h6);
+  }
+
+  &.loading {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}
+
 @media (max-width: 1000px) {
   body {
     font-size: 14px;
@@ -175,6 +311,10 @@ button {
   h6 {
     font-size: 1em;
   }
+
+  .body-section {
+      padding: 20px 30px;
+    }
 
   .row {
     flex-direction: column;

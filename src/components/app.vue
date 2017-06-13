@@ -1,13 +1,15 @@
 <template>
   <div class="app">
     <!-- <div class="background" v-if="!isMobile">
-      <snake />
     </div> -->
     <div class="title">
-      <img class="img" :src="image" alt="" />
-      <h1>Jake & Milly</h1>
-      <h6>8.26.2017 - Stern Grove, San Francisco</h6>
-      <countdown />
+      <div class="background"></div>
+      <div class="title-content">
+        <img class="img" :src="image" alt="" />
+        <h1>Jake & Milly</h1>
+        <h6>8.26.2017 - Stern Grove, San Francisco</h6>
+        <countdown />
+      </div>
       <!-- <div class="title__more-info">More information coming soon.<span v-if="isMobile"> View on desktop to play a game.</span></div> -->
       <!-- <arrowkeys v-if="!isMobile" /> -->
     </div>
@@ -20,6 +22,7 @@
       <!-- <travel-accomodation /> -->
       <!-- <registry /> -->
       <!-- <questions /> -->
+      <snake-teaser />
     </div>
   </div>
 </template>
@@ -30,10 +33,10 @@ import jakemilly from "./../images/jakemilly.png"
 import questions from "./questions.vue"
 import countdown from "./countdown.vue"
 // import arrowkeys from "./arrowkeys.vue"
-// import snake from "./snake.vue"
 import venue from "./venue.vue"
 import sf from "./sf.vue"
 import rsvp from "./rsvp.vue"
+import snakeTeaser from "./snake-teaser.vue"
 import {isMobile} from "./utils/utils"
 import "./app.less"
 
@@ -62,6 +65,7 @@ export default {
     venue,
     sf,
     rsvp,
+    snakeTeaser,
   },
   destroyed: function() {
     // window.removeEventListener("keydown", this.onKeydown)

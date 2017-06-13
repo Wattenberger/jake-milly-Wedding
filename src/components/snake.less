@@ -1,16 +1,26 @@
+@import (reference) "../styles/style.less";
+
 .snake {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   max-width: 100vw;
   height: auto;
-  text-align: center;
+  color: @white;
+  // text-align: center;
   overflow: hidden;
+  z-index: 100;
 
   h6 {
-  	margin: 4px;
-  	font-size: 1em;
-    line-height: 1.2em;
+  	margin: 0;
+    text-align: left;
+  	// font-size: 1em;
+   //  line-height: 1.2em;
   }
 
   &__overlay {
@@ -21,7 +31,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(240, 240, 244, 0.6);
+    background: fade(@tc, 89);
 
     button {
       margin-top: 10px;
@@ -33,9 +43,9 @@
   }
 
   &__name {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
     margin-bottom: 1em;
 
     button {
@@ -43,15 +53,27 @@
     }
   }
 
+  .keyframes (fadeUp, {
+    0%   { opacity: 0; transform: translate3d(0, 20px, 0); }
+    100% { opacity: 1; transform: translate3d(0,    0, 0); }
+  });
+
+  .keyframes (fadeIn, {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+  });
+
   &__record-board {
     position: fixed;
     top: 20px;
     right: 20px;
+    width: 9em;
     pointer-events: none;
     transition: opacity 0.2s ease-out;
+    animation: fadeUp 0.6s ease-out;
 
     h6 {
-      font-weight: 500;
+      // font-weight: 500;
     }
 
     &.fade {
@@ -60,13 +82,18 @@
 
     &__record {
       display: flex;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-weight: 900;
+      &:extend(h6);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6em;
+      // text-transform: uppercase;
+      // letter-spacing: 0.1em;
+      // font-weight: 900;
+      animation: fadeIn 0.6s ease-out;
 
       &__name {
         flex: 1;
-        width: 10em;
+        width: 11em;
         text-align: left;
       }
 

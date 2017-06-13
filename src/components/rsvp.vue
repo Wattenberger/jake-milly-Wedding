@@ -83,7 +83,7 @@
 
 <script>
 import _ from "lodash"
-import "./venue.less"
+import "./rsvp.less"
 import fetch from "./utils/fetch"
 import VueForm from "vue-form"
 

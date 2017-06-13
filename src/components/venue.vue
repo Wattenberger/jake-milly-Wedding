@@ -39,6 +39,13 @@
               <div class="marker">6<span class="sub">PM</span></div>
               <div><h6>Dinner & dancing</h6></div>
             </li>
+            <!-- <li>
+              <div class="marker">10<span class="sub">PM</span></div>
+              <div>
+                <h6>Breakdown</h6>
+                <div>We'll be moving to a karaoke bar, join us if you can!</div>
+              </div>
+            </li> -->
           </ul>
         </div>
 

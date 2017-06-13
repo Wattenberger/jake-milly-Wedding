@@ -1,0 +1,82 @@
+@import (reference) "../styles/style.less";
+
+.snake-teaser {
+  &__placeholder {
+    position: relative;
+    height: 4em;
+    width: 100%;
+    background: @tc;
+    overflow: hidden;
+    cursor: pointer;
+
+    .keyframes (snakeSlide, {
+      0%   { transform: translate3d(-200px, 0, 0); }
+      100% { transform: translate3d( 260vw, 0, 0); }
+    });
+
+    &:hover {
+      .snake-teaser__placeholder__heads {
+        opacity: 1;
+      }
+    }
+
+    &__heads {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100vw;
+      margin-top: -14px;
+      animation: snakeSlide 12s linear;
+      animation-iteration-count: infinite;
+      opacity: 0.4;
+      transition: opacity 0.3s ease-out;
+
+
+      img:nth-child(2) {
+        margin-left: -6px;
+      }
+      img {
+        height: 22px;
+      }
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 5px;
+        left: -140vw;
+        width: 140vw;
+        height: 18px;
+        background: linear-gradient(to bottom, rgb(184, 53,100)  0%, rgb(184, 53,100)  20%,
+                                               rgb(255,106, 90) 20%, rgb(255,106, 90)  40%,
+                                               rgb(255,179, 80) 40%, rgb(255,179, 80)  60%,
+                                               rgb(131,184,170) 60%, rgb(131,184,170)  80%,
+                                               rgb( 39, 45, 77) 80%, rgb( 39, 45, 77) 100%,
+                                   )
+      }
+    }
+  }
+
+  &__snake-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+
+    &--playing {
+      opacity: 1;
+    }
+  }
+
+  &__close {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    color: @white;
+    line-height: 1em;
+    cursor: pointer;
+    z-index: 200;
+  }
+}

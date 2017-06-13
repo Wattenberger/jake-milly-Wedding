@@ -1,5 +1,5 @@
 <template>
-  <div class="sf body-section">
+  <div class="sf body-section body-section-white">
 
     <div class="row">
       <div class="col1">
