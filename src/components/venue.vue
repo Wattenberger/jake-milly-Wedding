@@ -17,7 +17,7 @@
 
         <div class="section">
           <h3>Weather</h3>
-          <p>It should be overcast and in the 60s or 70s <a href="https://darksky.net/details/37.7361,-122.4786/2016-8-26/us12/en" target="_blank">Last year</a>. We’ll be outside at least part of the time, so please bring an extra layer to keep cozy!</p>
+          <p>It should be overcast and in the 60s or 70s <a href="https://darksky.net/details/37.7361,-122.4786/2016-8-26/us12/en" target="_blank">Last year</a>. We will be outside at least part of the time, so please bring an extra layer to keep cozy!</p>
         </div>
 
         <div class="section">
@@ -48,6 +48,16 @@
             </li> -->
           </ul>
         </div>
+      </div>
+    </div>
+
+    <div class="body-section-escaped">
+      <stern-grove-map />
+    </div>
+
+    <div class="row">
+      <div class="col1"></div>
+      <div class="col2">
 
         <div class="section">
           <h3>Getting there</h3>
@@ -55,14 +65,13 @@
             <li>
               <div class="marker">🚗</div>
               <div>
-                <h6>If you’re driving</h6>
-                <div>Here’s a map!</div>
+                <h6>Driving</h6>
               </div>
             </li>
             <li>
               <div class="marker">🚃</div>
               <div>
-                <h6>If you’re taking public transportation</h6>
+                <h6>Public Transportation</h6>
                 <div>Take the MUNI KT or M line outbound to West Portal/Sloat/St Francis Station. Note that the K and M lines run underground through downtown and at street level near the venue. From there it’s an 8-10 minute walk to the venue. It’s a rather steep walk down the drive to the venue, so keep that in mind when planning your trip.</div>
               </div>
             </li>
@@ -96,10 +105,18 @@
 <script>
 import _ from "lodash"
 import "./venue.less"
+import sternGroveMap from "./stern-grove-map.vue"
 
 let component = {
   mounted() {
   },
+  data() {
+    return {
+    }
+  },
+  components: {
+    sternGroveMap
+  }
 }
 
 

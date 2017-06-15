@@ -1,0 +1,61 @@
+@import (reference) "../styles/style.less";
+
+.stern-grove-map {
+	// position: relative;
+
+	.map {
+		width: 100%;
+		max-width: 1200px;
+		margin: auto;
+		stroke-width: 10px;
+	}
+
+	.street {
+		fill: none;
+		stroke: @light-grey;
+		stroke-width: 10px;
+
+		&.selected {
+			stroke: @orange;
+		}
+	}
+	.path {
+		fill: none;
+		stroke: #F0E7D7;
+		stroke-width: 10px;
+	}
+	.park {
+		fill: #CCE7B8;
+	}
+	.lake {
+		fill: #BDDCF4;
+	}
+	.parking {
+		fill: @white;
+
+		 &:hover {
+			stroke-width: 2;
+		}
+	}
+	.clubhouse {
+		fill: @dark-green;
+	}
+	.clubhouse-icon {
+		transform-origin: center;
+		transition: all 0.3s ease-out;
+
+		&:hover {
+			transform: scale3d(2,2,2);
+
+			.icon {
+				transform: rotate(-10deg);
+			}
+		}
+	}
+
+	.icon {
+		fill: @white;
+		transition: all 0.3s ease-out;
+		transform-origin: center;
+	}
+}
