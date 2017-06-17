@@ -151,7 +151,7 @@ let component = {
         guest3: "",
         guest4: "",
         guest5: "",
-      }
+      })
       this.validateName();
     },
 
