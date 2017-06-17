@@ -15,7 +15,7 @@
                        required
                        autocomplete="off" 
                        name="name"
-                       v-on:keyup="wrongName = false"
+                       v-on:keyup="nameError = null"
                        v-on:keydown.13="lookupName"
                        type="text">
                 <div class="addon">
@@ -23,7 +23,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-message-error" v-if="wrongName">Try the name on your envelope</div>
+            <div class="form-message-error" v-if="nameError">{{ nameError }}</div>
           </validate>
 
 
@@ -121,7 +121,7 @@ let component = {
       },
       id: null,
       guests: 0,
-      wrongName: false,
+      nameError: null,
       loading: false,
       submitted: false,
     }
@@ -132,7 +132,7 @@ let component = {
       //   // alert user and exit early
       //   return;
       // }
-      this.wrongName = false
+      this.nameError = null
       this.id = null
       this.validateName();
     },
@@ -147,7 +147,7 @@ let component = {
       this.loading = true
       const name = this.model.name.toLowerCase().trim()
       const guestParams = _.extend(params, {
-        fields: ["Guest", "People Invited"],
+        fields: ["Guest", "People Invited", "Names"],
         filterByFormula: `LOWER(Guest) = "${name}"`,
       })
 
@@ -155,15 +155,50 @@ let component = {
         method: "GET",
       }).then(res => {
         this.loading = false
-        if (!res.records ||
-            !res.records.length) {
-          ctrl.wrongName = true
-          ctrl.guests = 0
-          return
+
+        if (res.records && res.records.length) {
+          if (res.records.length > 1) {
+            this.tooManyNames(ctrl)
+            return
+          }
+
+          this.populateForm(ctrl, res.records[0])
+        } else {
+          
+          guestParams.filterByFormula = `SEARCH('${name}', LOWER(Names))`
+          fetch(`${API_ROOT}?${expandParams(params)}`, {
+            method: "GET",
+          }).then(res => {
+            if (res.records && res.records.length) {
+              if (res.records.length > 1) {
+                this.tooManyNames(ctrl)
+                return
+              }
+
+              this.populateForm(ctrl, res.records[0])
+            } else {
+              ctrl.nameError = "Try the name on your envelope"
+              ctrl.guests = 0
+              return
+            }
+
+          })
         }
 
-        ctrl.id = res.records[0].id
-        ctrl.guests = res.records[0].fields["People Invited"]
+      })
+    },
+
+    tooManyNames: (ctrl) => {
+      ctrl.nameError = "There's more than one guest with that name, could you be more specific?"
+      ctrl.guests = 0
+    },
+
+    populateForm: (ctrl, record) => {
+      ctrl.id = record.id
+      ctrl.guests = record.fields["People Invited"]
+      var names = record.fields["Names"].split(",");
+      _.each(names, (name, i) => {
+        ctrl.model[i ? `guest${i}` : "name"] = name
       })
     },
 
