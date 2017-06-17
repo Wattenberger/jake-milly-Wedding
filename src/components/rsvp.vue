@@ -38,11 +38,11 @@
             <div class="field">
               <div class="toggle">
                 <button class="button"
-                        :class="{'button--selected': model.status}"
-                        v-on:click="model.status = true">I'll be there</button>
+                :class="{'button--selected': model.status}"
+                v-on:click="model.status = true">I'll be there</button>
                 <button class="button"
-                        :class="{'button--selected': !model.status}"
-                        v-on:click="model.status = false">I can't make it</button>
+                :class="{'button--selected': !model.status}"
+                v-on:click="model.status = false">I can't make it</button>
               </div>
             </div>
 
@@ -51,27 +51,28 @@
                 <div class="field" v-if="guests > 1" v-for="n in guests - 1">
                   <label>Guest<span v-if="guests > 2"> {{ n }}</span> Name</label>
                   <input type="text"
-                         v-model="model[`guest${n}`]"
-                         v-on:keydown.13="saveRsvp"
-                         :name="`guest${n}`" />
+                  v-model="model[`guest${n}`]"
+                  v-on:keydown.13="saveRsvp"
+                  :name="`guest${n}`" />
                 </div>
               </validate>
 
               <div class="field">
                 <label>What song should we dance to?</label>
                 <input type="text"
-                       v-model="model.song"
-                       v-on:keydown.13="saveRsvp"
-                       name="song" />
+                v-model="model.song"
+                v-on:keydown.13="saveRsvp"
+                name="song" />
               </div>
 
               <div class="field">
                 <label>Any notes for the bride & groom?</label>
                 <textarea v-model="model.note"
-                          name="note" />
+                name="note" />
               </div>
             </div>
 
+            <div class="form-message-error form-message-already-responded" v-if="alreadyResponded">This will override your previous response</div>
             <button type="submit" v-on:click="saveRsvp">RSVP</button>
           </div>
         </vue-form>
@@ -109,26 +110,28 @@ const expandParams = params => Object
                `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
     })
     .join('&')
-  ;
+
+const defaultForm = {
+  name: "",
+  status: true,
+  guest1: "",
+  guest2: "",
+  guest3: "",
+  guest4: "",
+  guest5: "",
+  song: "",
+  note: "",
+}
 
 let component = {
   data() {
     return {
       formstate: {},
-      model: {
-        name: "",
-        status: true,
-        guest1: "",
-        guest2: "",
-        guest3: "",
-        guest4: "",
-        guest5: "",
-        song: "",
-        note: "",
-      },
+      model: defaultForm,
       id: null,
       guests: 0,
       nameError: null,
+      alreadyResponded: false,
       loading: false,
       submitted: false,
     }
@@ -140,7 +143,15 @@ let component = {
       //   return;
       // }
       this.nameError = null
+      this.alreadyResponded = false
       this.id = null
+      _.extend(this.model, {
+        guest1: "",
+        guest2: "",
+        guest3: "",
+        guest4: "",
+        guest5: "",
+      }
       this.validateName();
     },
 
@@ -154,7 +165,7 @@ let component = {
       this.loading = true
       const name = this.model.name.toLowerCase().trim()
       const guestParams = _.extend(params, {
-        fields: ["Guest", "People Invited", "Names"],
+        fields: ["Guest", "People Invited", "Names", "rsvp"],
         filterByFormula: `LOWER(Guest) = "${name}"`,
       })
 
@@ -203,8 +214,9 @@ let component = {
     populateForm: (ctrl, record) => {
       ctrl.id = record.id
       ctrl.guests = record.fields["People Invited"]
-      var names = record.fields["Names"].split(",");
+      if (record.fields["rsvp"]) ctrl.alreadyResponded = true
 
+      var names = record.fields["Names"].split(",");
       if (names.length > 1) {
         const searchedNameIdx = _.findIndex(names, name => _.toLower(name).indexOf(_.toLower(ctrl.model.name)) != -1)
         if (searchedNameIdx != -1) {
@@ -212,7 +224,7 @@ let component = {
           names.splice(searchedNameIdx + 1, 1)
         }
       }
-      
+
       _.each(names, (name, i) => {
         ctrl.model[i ? `guest${i}` : "name"] = name
       })
