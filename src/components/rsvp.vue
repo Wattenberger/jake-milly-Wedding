@@ -9,15 +9,15 @@
         <vue-form :state="formstate" @submit.prevent="onSubmit" v-if="!submitted" :class="{loading: loading}">
           <validate tag="label">
             <div class="field">
-              <label>Your Name(s)</label>
+              <label>Your Name</label>
               <div class="input-addon">
-                <input v-model="model.name"
+                <input type="text"
                        required
+                       v-model="model.name"
                        autocomplete="off" 
                        name="name"
                        v-on:keyup="nameError = null"
-                       v-on:keydown.13="lookupName"
-                       type="text">
+                       v-on:keydown.13="lookupName"/>
                 <div class="addon">
                 <button v-on:click="lookupName">Lookup</button>
                 </div>
@@ -53,7 +53,7 @@
                   <input type="text"
                          v-model="model[`guest${n}`]"
                          v-on:keydown.13="saveRsvp"
-                         :name="`guest${n}`">
+                         :name="`guest${n}`" />
                 </div>
               </validate>
 
@@ -62,7 +62,13 @@
                 <input type="text"
                        v-model="model.song"
                        v-on:keydown.13="saveRsvp"
-                       name="song">
+                       name="song" />
+              </div>
+
+              <div class="field">
+                <label>Any notes for the bride & groom?</label>
+                <textarea v-model="model.note"
+                          name="note" />
               </div>
             </div>
 
@@ -118,6 +124,7 @@ let component = {
         guest4: "",
         guest5: "",
         song: "",
+        note: "",
       },
       id: null,
       guests: 0,
@@ -197,6 +204,15 @@ let component = {
       ctrl.id = record.id
       ctrl.guests = record.fields["People Invited"]
       var names = record.fields["Names"].split(",");
+
+      if (names.length > 1) {
+        const searchedNameIdx = _.findIndex(names, name => _.toLower(name).indexOf(_.toLower(ctrl.model.name)) != -1)
+        if (searchedNameIdx != -1) {
+          names.unshift(names[searchedNameIdx])
+          names.splice(searchedNameIdx + 1, 1)
+        }
+      }
+      
       _.each(names, (name, i) => {
         ctrl.model[i ? `guest${i}` : "name"] = name
       })
@@ -209,12 +225,14 @@ let component = {
       this.loading = true
       let fields = {
         rsvp: this.model.status ? "yes" : "no",
+        'rsvp-name': this.model.name,
         guest1: this.model.guest1,
         guest2: this.model.guest2,
         guest3: this.model.guest3,
         guest4: this.model.guest4,
         guest5: this.model.guest5,
-        song: this.model.song
+        song: this.model.song,
+        "rsvp-note": this.model.note,
       }
       const url = `${API_ROOT}/${this.id}?${expandParams(params)}`
       fetch(url, {
