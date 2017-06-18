@@ -148,6 +148,7 @@ let component = {
       this.nameError = null
       this.alreadyResponded = false
       this.id = null
+      if (ga) ga('send', 'event', 'rsvp', 'lookup', 'name', this.model.name)
       _.extend(this.model, {
         guest1: "",
         guest2: "",
