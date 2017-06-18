@@ -24,6 +24,7 @@
               </div>
             </div>
             <div class="form-message-error" v-if="nameError">{{ nameError }}</div>
+            <div class="form-message-error form-message-error-secondary" v-if="nameError && numberOfTries > 4">If you're having trouble finding yourself, send <a class="button" href="mailto:wattenberger@gmail.com">Milly</a> or <a class="button" href="mailto:jacoby8s@gmail.com">Jake</a> an email.</div>
           </validate>
 
 
@@ -135,6 +136,7 @@ let component = {
       alreadyResponded: false,
       loading: false,
       submitted: false,
+      numberOfTries: 0,
     }
   },
   methods: {
@@ -154,6 +156,7 @@ let component = {
         guest5: "",
       })
       this.validateName();
+      this.numberOfTries++
     },
 
     onSubmit: function() {
