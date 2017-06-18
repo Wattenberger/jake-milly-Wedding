@@ -9,6 +9,7 @@
         <h1>Jake & Milly</h1>
         <h6>8.26.2017 - Stern Grove, San Francisco</h6>
         <countdown />
+        <button v-on:click="scrollToBottom">Rsvp here</button>
       </div>
       <!-- <div class="title__more-info">More information coming soon.<span v-if="isMobile"> View on desktop to play a game.</span></div> -->
       <!-- <arrowkeys v-if="!isMobile" /> -->
@@ -56,6 +57,33 @@ export default {
     }
   },
   methods: {
+    easeInOutQuad: function (t, b, c, d) {
+      t /= d/2;
+      if (t < 1) return c/2*t*t + b;
+      t--;
+      return -c/2 * (t*(t-2) - 1) + b;
+    },
+    scrollTo: function(element, to, duration) {
+      console.log(duration)
+      var start = element.scrollTop,
+          change = to - start,
+          currentTime = 0,
+          increment = 20,
+          ctrl = this;
+          
+      var animateScroll = function() {        
+          currentTime += increment;
+          var val = ctrl.easeInOutQuad(currentTime, start, change, duration);
+          element.scrollTop = val;
+          if(currentTime < duration) {
+              setTimeout(animateScroll, increment);
+          }
+      };
+      animateScroll();
+    },
+    scrollToBottom: function() {
+      this.scrollTo(document.body, document.documentElement.scrollHeight, 1000)
+    }
   },
   components: {
     questions,
