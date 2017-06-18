@@ -64,7 +64,6 @@ export default {
       return -c/2 * (t*(t-2) - 1) + b;
     },
     scrollTo: function(element, to, duration) {
-      console.log(duration)
       var start = element.scrollTop,
           change = to - start,
           currentTime = 0,

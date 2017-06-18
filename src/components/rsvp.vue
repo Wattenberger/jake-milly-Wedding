@@ -58,7 +58,7 @@
               </validate>
 
               <div class="field">
-                <label>What song should we dance to?</label>
+                <label>What songs should we add to the wedding playlist?</label>
                 <input type="text"
                 v-model="model.song"
                 v-on:keydown.13="saveRsvp"
@@ -90,6 +90,7 @@
 
 <script>
 import _ from "lodash"
+import moment from "moment"
 import "./rsvp.less"
 import fetch from "./utils/fetch"
 import VueForm from "vue-form"
@@ -245,6 +246,7 @@ let component = {
         guest5: this.model.guest5,
         song: this.model.song,
         "rsvp-note": this.model.note,
+        "rsvp-date": moment().format("YYYY-MM-DD")
       }
       const url = `${API_ROOT}/${this.id}?${expandParams(params)}`
       fetch(url, {
