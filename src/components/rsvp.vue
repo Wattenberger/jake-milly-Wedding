@@ -148,7 +148,10 @@ let component = {
       this.nameError = null
       this.alreadyResponded = false
       this.id = null
-      if (ga) ga ('event', 'name-lookup', this.model.name)
+      if (ga && ga.getAll) {
+        const tracker = ga.getAll()[0]
+        if (tracker) tracker.send('event', 'name-lookup', this.model.name)
+      }
       _.extend(this.model, {
         guest1: "",
         guest2: "",
