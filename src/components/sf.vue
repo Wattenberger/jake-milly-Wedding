@@ -30,7 +30,7 @@
               <div class="marker">⛲</div>
               <div>
                 <h6>Golden Gate Park</h6>
-                <div>There is so much here! The Japanese Tea Garden, De Young Art Museum, California Academy of Sciences and SF Botanical Gardens are among our favorite places in the park.
+                <div>The Japanese Tea Garden, De Young Art Museum, California Academy of Sciences and SF Botanical Gardens are among the best places in the park.
                   <div class="more-info"><a href="https://goldengatepark.com/" target="_blank">More info</a></div>
                 </div>
               </div>
@@ -50,6 +50,15 @@
                 <h6>California Academy of Sciences</h6>
                 <div>Spend an afternoon walking around Golden Gate Park and visit this amazing museum.  We encourage you to buy tickets in advance as it’s quite popular and definitely worth seeing while you’re in town.
                   <div class="more-info"><a href="http://www.calacademy.org/plan-your-visit" target="_blank">More info</a></div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="marker">🔬</div>
+              <div>
+                <h6>Legion of Honor</h6>
+                <div>Legion of Honor is a Classical, Fine Art museum. Combine a trip with a short hike around Land's End and Sutro Baths for a great afternoon in the city.
+                  <div class="more-info"><a href="http://legionofhonor.famsf.org/" target="_blank">More info</a></div>
                 </div>
               </div>
             </li>

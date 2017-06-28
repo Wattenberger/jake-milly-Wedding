@@ -9,7 +9,7 @@
         <h1>Jake & Milly</h1>
         <h6>8.26.2017 - Stern Grove, San Francisco</h6>
         <countdown />
-        <button v-on:click="scrollToBottom">Rsvp here</button>
+        <a href="#rsvp" class="button">Rsvp here</a>
       </div>
       <!-- <div class="title__more-info">More information coming soon.<span v-if="isMobile"> View on desktop to play a game.</span></div> -->
       <!-- <arrowkeys v-if="!isMobile" /> -->
