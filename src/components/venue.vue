@@ -43,7 +43,7 @@
               <div class="marker">10<span class="sub">PM</span></div>
               <div>
                 <h6>Breakdown</h6>
-                <div>We'll be moving to a karaoke bar, join us if you can!</div>
+                <div>We’ll be moving to a karaoke bar, join us if you can!</div>
               </div>
             </li> -->
           </ul>

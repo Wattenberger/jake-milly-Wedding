@@ -1,0 +1,77 @@
+@import (reference) "../styles/style.less";
+
+@option-margin: 0.7em;
+
+.honeyfund {
+
+	&__options {
+		margin-left: -@option-margin;
+		margin-right: -@option-margin;
+		margin-bottom: 6em;
+	}
+
+	&__option {
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		flex: 1 1 45%;
+		max-width: 500px;
+		// height: 400px;
+		margin: @option-margin;
+		margin-bottom: 4em;
+
+		&__image {
+			height: 20em;
+			width: 100%;
+			background-size: cover;
+			background-position: center;
+		}
+
+		form {
+			position: relative;
+			height: 30px;
+			margin-top: auto;
+		}
+
+		input[type=image] {
+			width: 100px;
+			border: none;
+			opacity: 0;
+		}
+
+		&__price {
+			.ff2;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: absolute;
+			top: 14px;
+			left: 14px;
+			height: 2.4em;
+			width: 2.6em;
+			padding-bottom: 0.2em;
+			// font-size: 0.8em;
+			line-height: 1.4em;
+			color: @burgundy;
+			background: @white;
+			border: 1px solid @burgundy;
+			border-radius: 2em;
+			transform: rotate(-15deg);
+			z-index: 2;
+
+			.sup {
+				font-size: 0.6em;
+				// margin-top: -0.1em;
+				display: inline-block;
+				margin-right: 0.2em;
+				font-weight: 400;
+			}
+		}
+
+		button {
+			position: absolute;
+			top: 0;
+			margin-top: 0;
+		}
+	}
+}

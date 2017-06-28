@@ -2,6 +2,18 @@
 
 .stern-grove-map {
 	// position: relative;
+	a {
+		display: block;
+		margin: 0;
+		padding: 0;
+		border: none;
+
+		&:hover {
+			&:after {
+				display: none;
+			}
+		}
+	}
 
 	.map {
 		width: 100%;
@@ -15,9 +27,9 @@
 		stroke: @light-grey;
 		stroke-width: 10px;
 
-		&.selected {
-			stroke: @orange;
-		}
+		// &.selected {
+		// 	stroke: @orange;
+		// }
 	}
 	.path {
 		fill: none;

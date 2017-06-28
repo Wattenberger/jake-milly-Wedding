@@ -3,6 +3,12 @@
 .rsvp {
 	form {
 		padding-bottom: 6em;
+
+		input, textarea {
+			&:not(:focus):not(:active) {
+				border-color: #cacacc;
+			}
+		}
 	}
 
 	.form-message-already-responded {

@@ -17,8 +17,9 @@
     <div class="content">
       <!-- <data-viz-or-story /> -->
       <venue />
-      <sf />
+      <!-- <sf /> -->
       <rsvp />
+      <!-- <honeyfund /> -->
       <!-- <event-schedule /> -->
       <!-- <travel-accomodation /> -->
       <!-- <registry /> -->
@@ -37,6 +38,7 @@ import countdown from "./countdown.vue"
 import venue from "./venue.vue"
 import sf from "./sf.vue"
 import rsvp from "./rsvp.vue"
+import honeyfund from "./honeyfund.vue"
 import snakeTeaser from "./snake-teaser.vue"
 import {isMobile} from "./utils/utils"
 import "./app.less"
@@ -92,6 +94,7 @@ export default {
     venue,
     sf,
     rsvp,
+    honeyfund,
     snakeTeaser,
   },
   destroyed: function() {
