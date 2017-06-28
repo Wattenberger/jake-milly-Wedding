@@ -19,7 +19,7 @@
       <venue />
       <sf />
       <rsvp />
-      <!-- <honeyfund /> -->
+      <honeyfund />
       <!-- <event-schedule /> -->
       <!-- <travel-accomodation /> -->
       <!-- <registry /> -->
