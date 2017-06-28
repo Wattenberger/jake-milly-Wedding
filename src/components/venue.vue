@@ -66,6 +66,7 @@
               <div class="marker">🚗</div>
               <div>
                 <h6>Driving</h6>
+                <div>Look up directions on <a href="https://www.google.com/maps/place/Trocadero+Clubhouse/@37.7357041,-122.4800544,17z/data=!4m12!1m6!3m5!1s0x808f7d97b7fb79ed:0xeb71ced4799b1a41!2sSigmund+Stern+Recreation+Grove!8m2!3d37.7353053!4d-122.4762135!3m4!1s0x0:0xe93215d73ebc37b5!8m2!3d37.7361638!4d-122.478177" target="_blank">Google Maps</a> and parking information below.</div>
               </div>
             </li>
             <li>

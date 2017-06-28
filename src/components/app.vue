@@ -17,7 +17,7 @@
     <div class="content">
       <!-- <data-viz-or-story /> -->
       <venue />
-      <!-- <sf /> -->
+      <sf />
       <rsvp />
       <!-- <honeyfund /> -->
       <!-- <event-schedule /> -->

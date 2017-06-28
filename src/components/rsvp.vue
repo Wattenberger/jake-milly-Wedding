@@ -1,5 +1,5 @@
 <template>
-  <div class="rsvp body-section body-section-white">
+  <div class="rsvp body-section">
 
     <div class="row">
       <div class="col1">
