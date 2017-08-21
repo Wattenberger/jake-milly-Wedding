@@ -8,6 +8,20 @@
           c0,0-45,3.8-78.8,7.5S634,729.8,595.3,729.8s-165-10-191.3-33.8s-20-68.8-20-68.8l-80-140c0,0,26.3-31.3,48.8-41.3s45-10,45-10
           l25,21.3l-7.5,22.5c0,0,38.8,43.8,51.3,57.5s22.5,40,95,42.5s140,11.3,195,22.5s115-40,115-40L859,321l195-10l12.5,175
           c0,0,32.5-3.8,63.8,12.5s45,22.5,63.8,22.5s560-29.4,560-29.4L1768.4,801z"/>
+
+        <path v-for="path in paths"
+           v-on:mousemove="path.className == 'street' ? onStreetMouseOver(path, $event) : onPathMouseOver"
+           :class="{[`mouse-target`]: true}"
+           :d="path.d"
+        />
+        <line v-for="line in lines"
+           v-on:mousemove="line.className == 'street' ? onStreetMouseOver(line, $event) : onPathMouseOver"
+           :class="{[`mouse-target`]: true}"
+           :x1="line.x1"
+           :y1="line.y1"
+           :x2="line.x2"
+           :y2="line.y2"
+        />
         <path v-for="path in paths"
               v-on:mousemove="path.className == 'street' ? onStreetMouseOver(path, $event) : onPathMouseOver"
               :class="{selected: path.className == 'street' && tooltipText == path.name, [path.className]: true}"
@@ -25,7 +39,7 @@
         <path v-on:mousemove="onPlaceMouseOver('Pine Lake', $event)" class="lake" d="M365.3,536.5c23.1,2.3,38.8-5.7,50,18.1c11.3,23.8,65.8,65.1,105.8,66.2c40,1.1,97,8.8,77,42.5
           s-34,2.1-59,14.9c-25,12.8-77,24.52-105-14.9S397,588,383,574S345.5,534.6,365.3,536.5z"/>
           <rect v-on:mousemove="onPlaceMouseOver('Main Parking', $event)" class="parking" x="1082.6" y="580.3" transform="matrix(0.9613 0.2756 -0.2756 0.9613 208.719 -289.2393)" width="102" height="35.6"/>
-        
+
           <rect v-on:mousemove="onPlaceMouseOver('Small Parking Lot', $event)" class="parking" x="1386.1" y="691.6" transform="matrix(0.9487 0.3162 -0.3162 0.9487 293.0439 -407.6565)" width="33" height="15"/>
         <g class="clubhouse-icon">
           <path v-on:mousemove="onPlaceMouseOver('Trocadero Clubhouse', $event)" class="clubhouse" d="M1525.5,607.9c0,10.6-15.2,34.2-21.5,43.6c-1.3,2-4.2,2-5.6,0c-6.4-9.5-21.5-33-21.5-43.6
@@ -66,6 +80,7 @@
           </g>
         </g>
       </svg>
+      <div class="message">Best entrance for getting dropped off</div>
     </a>
   </div>
 
@@ -158,8 +173,8 @@ let component = {
   },
   methods: {
     onMouseMove: function(e) {
-      this.tooltipLeft = e.pageX
-      this.tooltipTop = e.pageY
+      this.tooltipLeft = e.offsetX
+      this.tooltipTop = e.offsetY
     },
     onMouseOut: function(e) {
       _.debounce(this.removeTooltip, 1500)()
@@ -168,15 +183,16 @@ let component = {
       this.tooltipText = null;
     },
     onStreetMouseOver: function(path, e) {
-      this.tooltipLeft = e.pageX
-      this.tooltipTop = e.pageY
+        console.log(e)
+      this.tooltipLeft = e.offsetX
+      this.tooltipTop = e.offsetY
       this.tooltipText = path.name
       if (this.debouncedRemoveTooltip) this.debouncedRemoveTooltip.cancel()
     },
     onPathMouseOver: function() {},
     onPlaceMouseOver: function(name, e) {
-      this.tooltipLeft = e.pageX
-      this.tooltipTop = e.pageY
+      this.tooltipLeft = e.offsetX
+      this.tooltipTop = e.offsetY
       this.tooltipText = name
       if (this.debouncedRemoveTooltip) this.debouncedRemoveTooltip.cancel()
     },

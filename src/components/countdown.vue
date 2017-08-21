@@ -15,7 +15,7 @@ const durations = [
   {slug: "m", label: "minutes"},
   {slug: "S", label: "seconds"},
 ]
-const weddingDate = moment("2017-08-26 16", "YYYY-MM-DD HH")
+const weddingDate = moment("2017-08-26 19", "YYYY-MM-DD HH")
 let component = {
   mounted() {
     window.setInterval(() => {

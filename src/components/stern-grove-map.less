@@ -1,10 +1,13 @@
 @import (reference) "../styles/style.less";
 
 .stern-grove-map {
-	// position: relative;
+	position: relative;
+
 	a {
 		display: block;
+        max-width: 1200px;
 		margin: 0;
+        margin: auto;
 		padding: 0;
 		border: none;
 
@@ -17,19 +20,22 @@
 
 	.map {
 		width: 100%;
-		max-width: 1200px;
-		margin: auto;
 		stroke-width: 10px;
 	}
 
+    .mouse-target {
+        stroke: transparent;
+        fill: none;
+        stroke-width: 60px;
+    }
 	.street {
 		fill: none;
 		stroke: @light-grey;
 		stroke-width: 10px;
 
-		// &.selected {
-		// 	stroke: @orange;
-		// }
+		&.selected {
+			stroke: @orange;
+		}
 	}
 	.path {
 		fill: none;
@@ -64,6 +70,16 @@
 			}
 		}
 	}
+
+    .message {
+        position: absolute;
+        right: 20px;
+        bottom: 6vw;
+        max-width: 10em;
+        color: @dark-grey;
+        font-size: 1.1vw;
+        line-height: 1.3em;
+    }
 
 	.icon {
 		fill: @white;
